@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AELIA OS // ARCHIVO VERDE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#08120C] text-[#E0EADF] font-mono min-h-screen pb-12 selection:bg-[#39FF14] selection:text-[#08120C]">
+
+  <!-- HEADER / APP BAR -->
+  <header class="sticky top-0 z-50 bg-[#0B1C10]/95 backdrop-blur border-b-2 border-[#2C4A34] px-4 py-3 flex justify-between items-center shadow-lg">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 rounded-full bg-[#39FF14] animate-pulse"></div>
+      <h1 class="font-black text-lg sm:text-xl text-[#98FF98] tracking-wider uppercase">AELIA<span class="text-[#39FF14]">.OS</span> v2.0</h1>
+    </div>
+    
+    <!-- PROGRESS BAR IN HEADER -->
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex flex-col text-right">
+        <span class="text-xs text-[#50C878] font-bold">PROGRESSO TOTAL</span>
+        <span id="header-progress-text" class="text-xs text-[#39FF14]">0% CONCLUÍDO</span>
+      </div>
+      <div class="w-24 sm:w-32 bg-[#1A3020] h-3 rounded-full overflow-hidden border border-[#2C4A34]">
+        <div id="header-progress-bar" class="bg-gradient-to-r from-[#50C878] to-[#39FF14] h-full transition-all duration-500 w-0"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-8">
+
+    <!-- HERO / INTRO BANNER -->
+    <section class="bg-gradient-to-br from-[#1A3020] via-[#0B1C10] to-[#2C4A34] p-6 rounded-2xl border-2 border-[#50C878]/40 shadow-xl relative overflow-hidden">
+      <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-[#39FF14]/10 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="relative z-10 space-y-3">
+        <div class="inline-block px-3 py-1 bg-[#39FF14]/10 border border-[#39FF14]/40 rounded-full text-xs font-bold text-[#39FF14] uppercase">
+          ✦ Experiência Interativa Personalizada
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-black text-[#98FF98]">SISTEMA ARCHIVO VERDE</h2>
+        <p class="text-sm sm:text-base text-[#B0C4B1] leading-relaxed">
+          Bem-vinda, Aelia! Este é um espaço interativo construído sob medida com vários tons de verde, missões de desenhos, investigações literárias e um arquivo de músicas completo.
+        </p>
+
+        <!-- INSIDE JOKE BADGES -->
+        <div class="flex flex-wrap gap-2 pt-2 text-xs">
+          <span class="px-2.5 py-1 bg-[#2C4A34] text-[#98FF98] rounded-md border border-[#50C878]/30">#SonsoAprovado</span>
+          <span class="px-2.5 py-1 bg-[#2C4A34] text-[#98FF98] rounded-md border border-[#50C878]/30">#AmizadeAurora</span>
+          <span class="px-2.5 py-1 bg-[#2C4A34] text-[#39FF14] rounded-md border border-[#39FF14]/30">#TréguaPelaMúsica</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="flex flex-wrap gap-2 border-b border-[#2C4A34] pb-3" id="nav-tabs">
+      <button onclick="switchTab('jogos')" id="tab-jogos" class="tab-btn active-tab px-4 py-2 rounded-xl text-sm font-bold transition-all">
+        🎮 JOGOS & MISSÕES
+      </button>
+      <button onclick="switchTab('musica')" id="tab-musica" class="tab-btn inactive-tab px-4 py-2 rounded-xl text-sm font-bold transition-all">
+        🎵 ARQUIVO SONORO
+      </button>
+      <button onclick="switchTab('conquistas')" id="tab-conquistas" class="tab-btn inactive-tab px-4 py-2 rounded-xl text-sm font-bold transition-all">
+        🏆 CONQUISTAS & BADGES
+      </button>
+    </nav>
+
+    <!-- TAB 1: JOGOS & MISSÕES -->
+    <div id="content-jogos" class="tab-content space-y-6">
+
+      <!-- SPECIAL REWARD CARD (FINAL LETTER) -->
+      <div id="letter-reward-card" class="hidden bg-gradient-to-br from-[#1A3020] via-[#2C4A34] to-[#0B1C10] border-2 border-[#39FF14] rounded-2xl p-6 shadow-2xl space-y-4 animate-bounce-short">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">✉️</span>
+            <h3 class="text-lg font-black text-[#39FF14] uppercase tracking-wider">MENSAGEM ESPECIAL DESBLOQUEADA!</h3>
+          </div>
+          <span class="px-3 py-1 bg-[#39FF14]/20 border border-[#39FF14] text-[#39FF14] text-xs font-bold rounded-full">100% CONCLUÍDO</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#E0EADF]">
+          Você completou todas as missões com sucesso! Há uma carta especial aguardando você.
+        </p>
+        <button onclick="openLetterModal()" class="w-full sm:w-auto px-6 py-3 bg-[#39FF14] text-[#08120C] font-black rounded-xl hover:bg-[#50C878] transition-all shadow-lg flex items-center justify-center gap-2">
+          <span>📬 ABRIR CARTA</span>
+        </button>
+      </div>
+
+      <!-- GAME A: OS URSOS SEM CURSO -->
+      <article class="bg-[#1A3020]/80 border-2 border-[#2C4A34] rounded-2xl p-5 shadow-md hover:border-[#50C878] transition-all space-y-4">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-xs font-bold text-[#50C878] uppercase tracking-wider">Missão 01 • Animação</span>
+            <h3 class="text-xl font-bold text-[#98FF98]">Os Ursos Sem Curso: Operação Amizade</h3>
+          </div>
+          <span id="badge-ursos" class="status-badge bg-[#2C4A34] text-[#B0C4B1] px-2.5 py-1 rounded-full text-xs font-bold">Pendente</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#B0C4B1]">
+          Pardo, Panda e Polar precisam organizar um evento de amizade na cidade, mas Panda perdeu o celular e Polar está tentando congelar o food truck errado.
+        </p>
+
+        <!-- GAME AREA -->
+        <div id="game-ursos-body" class="bg-[#0B1C10] p-4 rounded-xl border border-[#2C4A34] space-y-3 text-sm">
+          <p id="ursos-text" class="text-[#E0EADF]">Carregando missão...</p>
+          <div id="ursos-options" class="space-y-2 pt-2"></div>
+        </div>
+      </article>
+
+      <!-- GAME B: TRÊS ESPIÃS DEMAIS -->
+      <article class="bg-[#1A3020]/80 border-2 border-[#2C4A34] rounded-2xl p-5 shadow-md hover:border-[#50C878] transition-all space-y-4">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-xs font-bold text-[#50C878] uppercase tracking-wider">Missão 02 • Espionagem WOOHP</span>
+            <h3 class="text-xl font-bold text-[#98FF98]">Três Espiãs Demais: Missão Confidencial</h3>
+          </div>
+          <span id="badge-espia" class="status-badge bg-[#2C4A34] text-[#B0C4B1] px-2.5 py-1 rounded-full text-xs font-bold">Pendente</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#B0C4B1]">
+          Jerry convocou você para uma emergência no WOOHP. Escolha seu gadget e investigue o mistério do vilão que está roubando a educação das pessoas na cidade.
+        </p>
+
+        <div id="game-espia-body" class="bg-[#0B1C10] p-4 rounded-xl border border-[#2C4A34] space-y-3 text-sm">
+          <p id="espia-text" class="text-[#E0EADF]">Carregando relatório do WOOHP...</p>
+          <div id="espia-options" class="space-y-2 pt-2"></div>
+        </div>
+      </article>
+
+      <!-- GAME C: OS PADRINHOS MÁGICOS -->
+      <article class="bg-[#1A3020]/80 border-2 border-[#2C4A34] rounded-2xl p-5 shadow-md hover:border-[#50C878] transition-all space-y-4">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-xs font-bold text-[#50C878] uppercase tracking-wider">Missão 03 • Magia Literária</span>
+            <h3 class="text-xl font-bold text-[#98FF98]">Os Padrinhos Mágicos: Desejo Duvidoso</h3>
+          </div>
+          <span id="badge-padrinhos" class="status-badge bg-[#2C4A34] text-[#B0C4B1] px-2.5 py-1 rounded-full text-xs font-bold">Pendente</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#B0C4B1]">
+          Cosmo e Wanda concederam um pedido, mas entenderam tudo de forma estritamente literal. Veja as consequências malucas!
+        </p>
+
+        <div id="game-padrinhos-body" class="bg-[#0B1C10] p-4 rounded-xl border border-[#2C4A34] space-y-3 text-sm">
+          <p id="padrinhos-text" class="text-[#E0EADF]">Faça um desejo...</p>
+          <div id="padrinhos-options" class="space-y-2 pt-2"></div>
+        </div>
+      </article>
+
+      <!-- GAME D: JOVENS TITÃS EM AÇÃO -->
+      <article class="bg-[#1A3020]/80 border-2 border-[#2C4A34] rounded-2xl p-5 shadow-md hover:border-[#50C878] transition-all space-y-4">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-xs font-bold text-[#50C878] uppercase tracking-wider">Missão 04 • Caos Cômico</span>
+            <h3 class="text-xl font-bold text-[#98FF98]">Jovens Titãs em Ação: Caos na Torre</h3>
+          </div>
+          <span id="badge-titas" class="status-badge bg-[#2C4A34] text-[#B0C4B1] px-2.5 py-1 rounded-full text-xs font-bold">Pendente</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#B0C4B1]">
+          Robin está surtando com o cronograma, Mutano e Ciborgue estão fazendo uma competição de hambúrguer de tofu e Ravena só quer ler em paz.
+        </p>
+
+        <div id="game-titas-body" class="bg-[#0B1C10] p-4 rounded-xl border border-[#2C4A34] space-y-3 text-sm">
+          <p id="titas-text" class="text-[#E0EADF]">Carregando confusão na Torre...</p>
+          <div id="titas-options" class="space-y-2 pt-2"></div>
+        </div>
+      </article>
+
+      <!-- GAME E: DOM CASMURRO (TRIBUNAL DA DESCONFIANÇA) -->
+      <article class="bg-[#1A3020]/80 border-2 border-[#50C878]/60 rounded-2xl p-5 shadow-md space-y-4">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-xs font-bold text-[#39FF14] uppercase tracking-wider">Missão 05 • Investigação Literária</span>
+            <h3 class="text-xl font-bold text-[#98FF98]">Dom Casmurro: Tribunal da Desconfiança</h3>
+          </div>
+          <span id="badge-domcasmurro" class="status-badge bg-[#2C4A34] text-[#B0C4B1] px-2.5 py-1 rounded-full text-xs font-bold">Pendente</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#B0C4B1]">
+          Examine os fatos, as ironias de Bentinho e as ambiguidades de Capitu. Selecione sua resposta, confirme e trave sua escolha!
+        </p>
+
+        <div id="game-casmurro-body" class="bg-[#0B1C10] p-4 rounded-xl border border-[#2C4A34] space-y-4 text-sm">
+          <p id="casmurro-question" class="font-semibold text-[#98FF98]"></p>
+          
+          <!-- OPTIONS CONTAINER -->
+          <div id="casmurro-options-container" class="space-y-2"></div>
+
+          <!-- CONFIRM BUTTON -->
+          <div class="pt-2 flex justify-end">
+            <button id="casmurro-confirm-btn" onclick="confirmCasmurroAnswer()" disabled class="px-5 py-2.5 bg-[#2C4A34] text-[#B0C4B1] font-bold rounded-xl disabled:opacity-40 transition-all">
+              Confirmar Escolha
+            </button>
+          </div>
+
+          <div id="casmurro-result-feedback" class="hidden p-3 rounded-lg bg-[#1A3020] border border-[#50C878]/40 text-xs sm:text-sm text-[#E0EADF]"></div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- TAB 2: ARQUIVO SONORO -->
+    <div id="content-musica" class="tab-content hidden space-y-6">
+
+      <!-- SPOTIFY JAM HIGHLIGHT -->
+      <div class="bg-gradient-to-r from-[#1A3020] via-[#2C4A34] to-[#0B1C10] p-6 rounded-2xl border-2 border-[#39FF14]/50 shadow-lg space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#1DB954] flex items-center justify-center font-black text-[#08120C]">🎵</div>
+          <div>
+            <h3 class="text-lg font-bold text-[#39FF14]">Nossa Jam Compartilhada</h3>
+            <p class="text-xs text-[#B0C4B1]">Playlist exclusiva do Spotify criada em conjunto</p>
+          </div>
+        </div>
+        <p class="text-xs sm:text-sm text-[#E0EADF]">
+          Acesse diretamente a nossa playlist para continuar ouvindo e adicionando novas faixas.
+        </p>
+        <a href="https://open.spotify.com/playlist/5lEkR5HoInNCc1m2wOKT0u?si=hZU8KtmyQ4qjfcWbMp5hWw&utm_source=copy-link&pi=cABtKdrQSd2l0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 bg-[#1DB954] text-[#08120C] font-bold rounded-xl hover:bg-[#39FF14] transition-all text-sm">
+          <span>Abrir Playlist no Spotify</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </a>
+      </div>
+
+      <!-- STATIONS GRID -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <!-- ESTAÇÃO BLUES -->
+        <div class="bg-[#1A3020] p-5 rounded-2xl border border-[#2C4A34] space-y-3">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-[#98FF98]">Estação Blues</h4>
+            <span class="text-xs px-2 py-0.5 bg-[#2C4A34] text-[#50C878] rounded">Ray Charles & Lionel Richie</span>
+          </div>
+          <p class="text-xs text-[#B0C4B1]">Apreciação dos mestres do Soul e do Blues com lirismo impecável.</p>
+          <div class="space-y-2 pt-2">
+            <a href="https://open.spotify.com/artist/1E23L933RztBhuP8A21mFR" target="_blank" rel="noopener" class="block p-2 bg-[#0B1C10] hover:bg-[#2C4A34] rounded-lg text-xs text-[#E0EADF] transition-all">➔ Ouvir Ray Charles no Spotify</a>
+            <a href="https://open.spotify.com/artist/2T1SFBKG9L3A19y5M11311" target="_blank" rel="noopener" class="block p-2 bg-[#0B1C10] hover:bg-[#2C4A34] rounded-lg text-xs text-[#E0EADF] transition-all">➔ Ouvir Lionel Richie no Spotify</a>
+          </div>
+        </div>
+
+        <!-- ESTAÇÃO SAMBA -->
+        <div class="bg-[#1A3020] p-5 rounded-2xl border border-[#2C4A34] space-y-3">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-[#98FF98]">Estação Samba</h4>
+            <span class="text-xs px-2 py-0.5 bg-[#2C4A34] text-[#50C878] rounded">Raízes & Poesia</span>
+          </div>
+          <p class="text-xs text-[#B0C4B1]">A cadência perfeita e o ritmo brasileiro que enriquecem o dia.</p>
+          <a href="https://open.spotify.com/genre/0JQ5DAqbMKFD2A9pCjA38E" target="_blank" rel="noopener" class="block p-2 bg-[#0B1C10] hover:bg-[#2C4A34] rounded-lg text-xs text-[#E0EADF] transition-all">➔ Explorar Clássicos do Samba</a>
+        </div>
+
+        <!-- FREQUÊNCIA RAP & BATALHAS -->
+        <div class="bg-[#1A3020] p-5 rounded-2xl border border-[#2C4A34] space-y-3">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-[#98FF98]">Frequência Rap</h4>
+            <span class="text-xs px-2 py-0.5 bg-[#2C4A34] text-[#50C878] rounded">Batalhas & Rimas</span>
+          </div>
+          <p class="text-xs text-[#B0C4B1]">Gerador de punchlines e rimas improvisadas para animar.</p>
+          <button onclick="generateRhyme()" class="w-full py-2 bg-[#2C4A34] hover:bg-[#50C878] hover:text-[#08120C] text-[#98FF98] font-bold rounded-lg text-xs transition-all">
+            ⚡ Gerar Rima do Momento
+          </button>
+          <p id="rhyme-output" class="text-xs italic text-[#39FF14] bg-[#0B1C10] p-2 rounded hidden"></p>
+        </div>
+
+        <!-- MODO CHILDISH GAMBINO -->
+        <div class="bg-[#1A3020] p-5 rounded-2xl border border-[#2C4A34] space-y-3">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-[#98FF98]">Modo Childish Gambino</h4>
+            <span class="text-xs px-2 py-0.5 bg-[#2C4A34] text-[#39FF14] rounded">Donald Glover</span>
+          </div>
+          <p class="text-xs text-[#B0C4B1]">Gênio da versatilidade musical, do funk/R&B ao rap moderno.</p>
+          <a href="https://open.spotify.com/artist/73s1A15V893S9m1cR1P1ex" target="_blank" rel="noopener" class="block p-2 bg-[#0B1C10] hover:bg-[#2C4A34] rounded-lg text-xs text-[#E0EADF] transition-all">➔ Abrir Perfil Oficial Gambino</a>
+        </div>
+
+      </div>
+
+      <!-- UNLOCKABLE MYSTERY TRACK -->
+      <div id="mystery-track-card" class="p-5 rounded-2xl border-2 border-dashed border-[#2C4A34] bg-[#0B1C10] text-center space-y-3">
+        <h4 class="font-bold text-[#B0C4B1]">🔒 Faixa Misteriosa Bloqueada</h4>
+        <p class="text-xs text-[#B0C4B1]">Complete todas as 5 missões na aba de jogos para desbloquear esta recomendação secreta e abrir sua carta!</p>
+      </div>
+
+    </div>
+
+    <!-- TAB 3: CONQUISTAS & BADGES -->
+    <div id="content-conquistas" class="tab-content hidden space-y-6">
+
+      <div class="bg-[#1A3020] p-6 rounded-2xl border border-[#2C4A34] space-y-4">
+        <h3 class="text-xl font-bold text-[#98FF98]">Suas Conquistas Desbloqueadas</h3>
+        <p class="text-xs text-[#B0C4B1]">Acompanhe seu avanço em cada uma das etapas do projeto.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="achievements-list">
+          <!-- DYNAMICALLY POPULATED -->
+        </div>
+      </div>
+
+      <!-- RESET PROGRESS BUTTON -->
+      <div class="pt-6 border-t border-[#2C4A34] flex justify-end">
+        <button onclick="promptResetProgress()" class="px-4 py-2 bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-200 text-xs font-bold rounded-xl transition-all">
+          ⚠️ Reiniciar Todo o Progresso
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL DA CARTA COM DISCO GIRANDO DE ENFEITE -->
+  <div id="letter-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#1A3020] border-2 border-[#39FF14] rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      
+      <!-- FECHAR MODAL -->
+      <button onclick="closeLetterModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#0B1C10] text-[#39FF14] hover:bg-[#39FF14] hover:text-[#08120C] font-bold border border-[#39FF14] flex items-center justify-center transition-all">
+        ✕
+      </button>
+
+      <div class="flex items-center justify-between border-b border-[#2C4A34] pb-4">
+        <div>
+          <span class="text-xs font-bold text-[#50C878] uppercase">Mensagem Pessoal</span>
+          <h3 class="text-xl sm:text-2xl font-black text-[#98FF98]">Uma Carta para Aelia</h3>
+        </div>
+      </div>
+
+      <!-- LAYOUT DA CARTA + DISCO DE ENFEITE -->
+      <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
+        
+        <!-- TEXTO DA CARTA -->
+        <div class="flex-1 bg-[#0B1C10] p-5 sm:p-6 rounded-2xl border border-[#2C4A34] space-y-4 text-xs sm:text-sm text-[#E0EADF] leading-relaxed">
+          <p>a propósito, eu queria te agradecer por ter tido a mente aberta comigo.</p>
+
+          <p>eu sei que você já teve um pé atrás comigo, até porque eu era considerado inacessível e sei que falam bastante de mim por aí. então, você poderia ter continuado com essa impressão e nem tentado me conhecer de verdade, mas me deu a oportunidade de entrosar com você. e fico feliz pra caralho que tenha feito isso, porque, no fim, você descobriu que eu sou um cara daora mesmo.</p>
+
+          <p>você já me chamou de sonso também, e, sinceramente, não tenho muito como discordar. talvez eu seja um pouco mesmo, não vou ficar tentando defender uma causa perdida.</p>
+
+          <p>outra coisa que admiro muito é a sua amizade com a Aurora. acho muito daora ver o carinho que vocês têm uma pela outra, a forma como essa amizade existe e a importância que vocês dão a ela. é uma daquelas coisas que eu gosto de observar nas pessoas, porque demonstra muito sobre quem elas são.</p>
+
+          <p>enfim, fico feliz que a gente esteja se aproximando mais. gosto das nossas conversas, das nossas jams e de poder conhecer alguém tão cheia de interesses, opiniões e personalidade quanto você. admiro muito a sua cultura, o jeito que você defende quem ama e a maneira como sustenta aquilo em que acredita.</p>
+
+          <p>obrigado por não ter se limitado ao que ouviu sobre mim e por ter me permitido mostrar quem eu sou por conta própria. acho que, no final, conhecer alguém vale muito mais do que qualquer impressão que os outros possam passar.</p>
+        </div>
+
+        <!-- DISCO GIRANDO DE ENFEITE -->
+        <div class="flex flex-col items-center justify-center space-y-2 shrink-0">
+          <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#08120C] border-4 border-[#39FF14] flex items-center justify-center shadow-lg animate-spin-slow">
+            <!-- GROOVES DO DISCO -->
+            <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-full border border-gray-700/50 flex items-center justify-center">
+              <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full border border-gray-700/50 flex items-center justify-center">
+                <!-- RÓTULO DO DISCO -->
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#39FF14] flex items-center justify-center border-2 border-black">
+                  <div class="w-3 h-3 bg-black rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="text-[10px] text-[#39FF14] tracking-widest uppercase font-bold text-center">Aelia Vinyl Edition</span>
+        </div>
+
+      </div>
+
+      <div class="pt-2 text-center">
+        <button onclick="closeLetterModal()" class="px-6 py-2 bg-[#2C4A34] text-[#98FF98] hover:bg-[#39FF14] hover:text-[#08120C] font-bold rounded-xl text-xs transition-all">
+          Fechar Carta
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
